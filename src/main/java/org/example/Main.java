@@ -33,8 +33,9 @@ public class Main {
 
                 List<CatFact> posts = mapper.readValue(response.getEntity().getContent(), new TypeReference<>() {});
 
-                List<CatFact> filteredPosts =
-                    posts.stream().filter(post -> post.getUpvotes() != null).collect(Collectors.toList());
+                List<CatFact> filteredPosts = posts.stream()
+                    .filter(post -> post.getUpvotes() != null && post.getUpvotes() > 0)
+                    .collect(Collectors.toList());
                 filteredPosts.forEach(System.out::println);
             } catch (Exception e) {
                 e.printStackTrace();
