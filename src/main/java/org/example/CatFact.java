@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CatFact {
     private String id;
-    public String text;
+    private String text;
     private String type;
     private String user;
     private Integer upvotes;
