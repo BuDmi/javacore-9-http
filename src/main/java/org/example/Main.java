@@ -29,14 +29,16 @@ public class Main {
 
             HttpGet request = new HttpGet(REMOTE_SERVICE_URL);
 
-            CloseableHttpResponse response = httpClient.execute(request);
+            try(CloseableHttpResponse response = httpClient.execute(request)) {
 
-            List<CatFact> posts = mapper.readValue(response.getEntity().getContent(), new TypeReference<>() {});
+                List<CatFact> posts = mapper.readValue(response.getEntity().getContent(), new TypeReference<>() {});
 
-            List<CatFact> filteredPosts = posts.stream().filter(post -> post.getUpvotes() != null).collect(Collectors.toList());
-            filteredPosts.forEach(System.out::println);
-
-            response.close();
+                List<CatFact> filteredPosts =
+                    posts.stream().filter(post -> post.getUpvotes() != null).collect(Collectors.toList());
+                filteredPosts.forEach(System.out::println);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
